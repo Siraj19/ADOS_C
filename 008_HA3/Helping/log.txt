@@ -1,0 +1,32 @@
+
+ChildTime[0] -> 458550 
+ChildTime[1] -> 458718 
+ChildTime[2] -> 458903 
+ChildTime[3] -> 459057 
+ChildTime[4] -> 459227 
+ChildTime[5] -> 459395 
+ChildTime[6] -> 459515 
+ChildTime[7] -> 459692 
+ChildTime[8] -> 460169 
+ChildTime[9] -> 460699 
+ChildTime[10] -> 461252 
+ChildTime[11] -> 461811 
+ChildTime[12] -> 462397 
+ChildTime[13] -> 462974 
+
+ 
+ 
+ParentTime[0] -> 458556 
+ParentTime[1] -> 458756 
+ParentTime[2] -> 458949 
+ParentTime[3] -> 459095 
+ParentTime[4] -> 459275 
+ParentTime[5] -> 459438 
+ParentTime[6] -> 459546 
+ParentTime[7] -> 459747 
+ParentTime[8] -> 460223 
+ParentTime[9] -> 460745 
+ParentTime[10] -> 461292 
+ParentTime[11] -> 461851 
+ParentTime[12] -> 462430 
+ParentTime[13] -> 463012 
