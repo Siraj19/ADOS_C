@@ -15,6 +15,63 @@ struct histogramBinStringInfo
     char ** charactersInBins;
 };
 
+struct largeTextStringInfo
+{
+    int size;
+    char * largeTextString;
+};
+
+struct largeTextHistogramBinStringInfo
+{
+    int numberOfBins;
+    int * numberOfCharatersInBins;
+};
+
+struct userConstraintInfo
+{
+    int numberOfThreads;
+    int blockSize;
+};
+
+struct threadArgInfo
+{
+    int threadID;
+    struct histogramBinStringInfo * hBSI;
+    struct largeTextStringInfo * lTSI;
+    struct userConstraintInfo * uCI;
+};
+
+struct threadReturnInfo
+{
+    int threadID;
+    int * numberOfCharatersInBins;
+};
+
+struct threadArgInfo * packthreadArgInfo(struct histogramBinStringInfo * hBSI, struct largeTextStringInfo * lTSI, struct userConstraintInfo * uCI, int threadID)
+{
+    struct threadArgInfo * tAI = (struct threadArgInfo *)malloc(sizeof(struct threadArgInfo));
+    tAI->threadID = threadID;
+    tAI->hBSI = hBSI;
+    tAI->lTSI = lTSI;
+    tAI->uCI = uCI;
+}
+
+struct userConstraintInfo * packUserConstraintInfo(const int numberOfThreads, const int blockSize)
+{
+    struct userConstraintInfo * uCI = (struct userConstraintInfo *)malloc(sizeof(struct userConstraintInfo));
+    uCI->numberOfThreads = numberOfThreads;
+    uCI->blockSize = blockSize;
+}
+
+struct largeTextStringInfo * findLargeTextStringInfo(char * str)
+{
+    struct largeTextStringInfo * lTSI = (struct largeTextStringInfo *)malloc(sizeof(struct largeTextStringInfo));
+    //Size of string should not be computed again and again. Hence there should be a structure to keep it in record for handy
+    lTSI->size = strlen(str);
+    lTSI->largeTextString = str;
+    return lTSI;
+}
+
 int findCharFrequencyInString(const char character, const char * str)
 {
     int frequency = 0;
@@ -22,7 +79,7 @@ int findCharFrequencyInString(const char character, const char * str)
     return frequency;
 }
 
-struct histogramBinStringInfo * findHistogramBinStringInfo(char* str)
+struct histogramBinStringInfo * findHistogramBinStringInfo(const char * str)
 {
     struct histogramBinStringInfo * hBSI = (struct histogramBinStringInfo *)malloc(sizeof(struct histogramBinStringInfo));
     //Number of bins is equal to number of lines plus one for other
@@ -64,6 +121,15 @@ struct histogramBinStringInfo * findHistogramBinStringInfo(char* str)
     return hBSI;
 }
 
+void printLargeTextHistogramBinStringInfo(struct largeTextHistogramBinStringInfo * lTHBSI)
+{
+    printf("Number of bins: %d \n", lTHBSI->numberOfBins);
+    for(int bin = 0; bin<lTHBSI->numberOfBins-1; bin++)
+    {
+        printf("Number of characters in %d bin is %d. \n", bin, lTHBSI->numberOfCharatersInBins[bin]);
+    }
+}
+
 void printHistogramBinStringInfo(struct histogramBinStringInfo * hBSI)
 {
     printf("Number of bins: %d \n", hBSI->numberOfBins);
@@ -77,6 +143,42 @@ void printHistogramBinStringInfo(struct histogramBinStringInfo * hBSI)
         }
         printf("\n");
     }
+}
+
+void * sectionedPartioningWorkerFunction(void * arg) 
+{
+    const struct threadArgInfo * tAI = (struct threadArgInfo *)arg;
+    struct threadReturnInfo * tRI = (struct threadReturnInfo *)malloc(sizeof(struct threadReturnInfo));
+    tRI->threadID = tAI->threadID;
+    tRI->numberOfCharatersInBins = calloc(sizeof(int), tAI->hBSI->numberOfBins-1);
+    printf("Hello, I am thread %d \n", tAI->threadID);
+    //Return with 0 count instead of doing segmentation fault due to limitation of large text string
+    if ((tAI->threadID)*(tAI->uCI->blockSize)>(tAI->lTSI->size))
+    {
+        return (void *) tRI;
+    }
+
+    for(int i = (tAI->threadID)*(tAI->uCI->blockSize); i<(tAI->threadID+1)*(tAI->uCI->blockSize); i++)
+    {
+        if(tAI->lTSI->largeTextString[i] == '\0')
+        {
+            return (void *) tRI;
+        }
+
+        for(int b = 0; b < (tAI->hBSI->numberOfBins-1); b++)
+        {
+            for(int c = 0; c < (tAI->hBSI->numberOfCharatersInBins[b]); c++)
+            {
+                if(tAI->lTSI->largeTextString[i] == tAI->hBSI->charactersInBins[b][c])
+                {
+                    tRI->numberOfCharatersInBins[b]++; 
+                }
+                
+            }
+        }
+    }
+
+    return (void *) tRI;
 }
 
 int main(int argc, char *argv[]) {
@@ -111,7 +213,7 @@ int main(int argc, char *argv[]) {
     while (fgets(buffer, BUFFER_SIZE, largeTextFile) != NULL) {
         strcat(largeTextString, buffer);
     }
-    printf("Your large text size is %d \n", strlen(largeTextString));
+    printf("Your large text size is %d \n", (int)strlen(largeTextString));
     free(buffer);
     //Reading histograms bin file in buffer then pasting back to histogramBinString
     buffer = malloc(BUFFER_SIZE);
@@ -119,13 +221,48 @@ int main(int argc, char *argv[]) {
     while (fgets(buffer, BUFFER_SIZE, histogramBinsFile) != NULL) {
         strcat(histogramBinString, buffer);
     }
-    printf("Your histogram bin string size is %d \n", strlen(histogramBinString));
+    printf("Your histogram bin string size is %d \n", (int)strlen(histogramBinString));
     free(buffer);
-    //
     printf("\n");
+
+    //Creating args for threads
     struct histogramBinStringInfo * hBSI = findHistogramBinStringInfo(histogramBinString);
-    printHistogramBinStringInfo((struct histogramBinStringInfo *)hBSI);
-    //printf("Large text file has %c %d times. \n",'\n',findCharFrequencyInString('\n',largeTextString));
+    struct largeTextStringInfo * lTSI = findLargeTextStringInfo(largeTextString);
+    struct userConstraintInfo * uCI = packUserConstraintInfo(numberOfThreads, blockSize);
+    struct threadArgInfo ** tAIarr = malloc(sizeof(struct threadArgInfo *)*(uCI->numberOfThreads));
+    struct threadReturnInfo ** tRIarr = malloc(sizeof(struct threadReturnInfo *)*(uCI->numberOfThreads));
+    struct largeTextHistogramBinStringInfo * lTHBSI = malloc(sizeof(struct largeTextHistogramBinStringInfo));
+    //Initializing results
+    lTHBSI->numberOfBins = hBSI->numberOfBins;
+    lTHBSI->numberOfCharatersInBins = calloc(sizeof(int), lTHBSI->numberOfBins);
+    lTHBSI->numberOfCharatersInBins[lTHBSI->numberOfBins-1] = lTSI->size;
+    //
+
+    for(int i = 0; i < uCI->numberOfThreads; i++)
+    {
+        tAIarr[i] = packthreadArgInfo(hBSI, lTSI, uCI, i);
+    }
+    //Creating threads
+    pthread_t p[uCI->numberOfThreads];
+    
+    for(int i = 0; i < uCI->numberOfThreads; i++)
+    {
+        pthread_create(&p[i], NULL, (void *)sectionedPartioningWorkerFunction, tAIarr[i]);
+    }
+
+    for(int i = 0; i < uCI->numberOfThreads; i++)
+    {
+        pthread_join(p[i], (void **) &tRIarr[i]);
+        printf("Thread %d returned back to the main. \n", tRIarr[i]->threadID);
+        for(int b = 0; b < lTHBSI->numberOfBins-1; b++)
+        {
+            lTHBSI->numberOfCharatersInBins[b] += tRIarr[i]->numberOfCharatersInBins[b];
+            lTHBSI->numberOfCharatersInBins[lTHBSI->numberOfBins-1] -= tRIarr[i]->numberOfCharatersInBins[b];
+        }
+    }
+    printf("Number of bins are %d. \n", hBSI->numberOfBins);
+    //printHistogramBinStringInfo((struct histogramBinStringInfo *)hBSI);
+    printLargeTextHistogramBinStringInfo(lTHBSI);
     printf("Done! \n");
     return EXIT_SUCCESS;
 }
