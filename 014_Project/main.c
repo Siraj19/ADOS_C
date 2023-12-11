@@ -223,7 +223,7 @@ void * interleavedPartioningWorkerFunction(void * arg)
 
 int main(int argc, char *argv[]) {
     //Checking if number of input arguments are complete
-    if(argc != 5){
+    if(argc != 6){
         fprintf(stderr, "Number of arguments are %d instead of 4.\n", argc-1);
         exit(EXIT_FAILURE);
     }
@@ -233,6 +233,15 @@ int main(int argc, char *argv[]) {
     //Converting asci string character to their respective equivalent integer
     const int numberOfThreads = atoi(argv[3]);
     const int blockSize = atoi(argv[4]);
+    //Assigning pointer to the argument which is dictating
+    //Interleaved or Sectioned
+    const char * partionSelect = argv[5];
+    //Checking if flags are correct
+    if(!(*partionSelect == 'i'||*partionSelect == 's'))
+    {
+        fprintf(stderr, "Partioning flag %s is incorrect.\n", partionSelect);
+        exit(EXIT_FAILURE);
+    }
     //Reading input files from the given path & file name
     FILE * largeTextFile = fopen(pathLargeTextFile, "r");
     FILE * histogramBinsFile = fopen(pathHistogramBinsFile, "r");
@@ -247,13 +256,23 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Could not open file %s for reading.\n", pathHistogramBinsFile);
         exit(EXIT_FAILURE);
     }
+
+    //Now profiling time
+    struct timeval current_time;
+    gettimeofday(&current_time, NULL);
+    //Variables for tracking start and end time
+    long start_time_us = current_time.tv_usec;
+    long end_time_us = 0;
+    long start_time_sec = current_time.tv_sec;
+    long end_time_sec = 0;
+
     //Reading large text file in buffer then pasting back to largeTextString
     char * buffer = malloc(BUFFER_SIZE);
     char * largeTextString = malloc(PAGE_SIZE);
     while (fgets(buffer, BUFFER_SIZE, largeTextFile) != NULL) {
         strcat(largeTextString, buffer);
     }
-    printf("Your large text size is %d \n", (int)strlen(largeTextString));
+    printf("Your large text string size is %d \n", (int)strlen(largeTextString));
     free(buffer);
     //Reading histograms bin file in buffer then pasting back to histogramBinString
     buffer = malloc(BUFFER_SIZE);
@@ -264,6 +283,15 @@ int main(int argc, char *argv[]) {
     printf("Your histogram bin string size is %d \n", (int)strlen(histogramBinString));
     free(buffer);
     printf("\n");
+    //Measuring file reading time
+    //Time taken to compute results
+    gettimeofday(&current_time, NULL);
+    end_time_us = current_time.tv_usec;
+    end_time_sec = current_time.tv_sec;
+    printf("Time taken to read is %f seconds. \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
+    gettimeofday(&current_time, NULL);
+    start_time_us = current_time.tv_usec;
+    start_time_sec = current_time.tv_sec;
 
     //Creating args for threads
     struct histogramBinStringInfo * hBSI = findHistogramBinStringInfo(histogramBinString);
@@ -276,25 +304,21 @@ int main(int argc, char *argv[]) {
     lTHBSI->numberOfBins = hBSI->numberOfBins;
     lTHBSI->numberOfCharatersInBins = calloc(sizeof(int), lTHBSI->numberOfBins);
     lTHBSI->numberOfCharatersInBins[lTHBSI->numberOfBins-1] = lTSI->size;
-    //Now profiling time
-    struct timeval current_time;
-    gettimeofday(&current_time, NULL);
-    //Variables for tracking start and end time
-    long start_time_us = current_time.tv_usec;
-    long end_time_us = 0;
-    long start_time_sec = current_time.tv_sec;
-    long end_time_sec   = 0;
 
     for(int i = 0; i < uCI->numberOfThreads; i++)
     {
         tAIarr[i] = packthreadArgInfo(hBSI, lTSI, uCI, i);
     }
-    //Creating threads
+    //Creating threads with functions assigned with partionSelect flag
     pthread_t p[uCI->numberOfThreads];
     
-    for(int i = 0; i < uCI->numberOfThreads; i++)
+    if(*partionSelect == 'i')for(int i = 0; i < uCI->numberOfThreads; i++)
     {
         pthread_create(&p[i], NULL, (void *)interleavedPartioningWorkerFunction, tAIarr[i]);
+    }
+    if(*partionSelect == 's')for(int i = 0; i < uCI->numberOfThreads; i++)
+    {
+        pthread_create(&p[i], NULL, (void *)sectionedPartioningWorkerFunction, tAIarr[i]);
     }
 
     for(int i = 0; i < uCI->numberOfThreads; i++)
@@ -312,8 +336,8 @@ int main(int argc, char *argv[]) {
     end_time_us = current_time.tv_usec;
     end_time_sec = current_time.tv_sec;
 
-    printf("Time taken is %f seconds. \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
-    printf("Number of bins are %d. \n", hBSI->numberOfBins);
+    printf("Time taken to compute is %f seconds. \n \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
+    //printf("Number of bins are %d. \n", hBSI->numberOfBins);
     //printHistogramBinStringInfo((struct histogramBinStringInfo *)hBSI);
     printLargeTextHistogramBinStringInfo(lTHBSI);
     printf("Done! \n");
