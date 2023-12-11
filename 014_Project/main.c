@@ -3,10 +3,11 @@
 #include <string.h>
 #include <assert.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 //Warning that the page size should be larger than your largetextfile
-#define PAGE_SIZE 4096
-#define BUFFER_SIZE 2
+#define PAGE_SIZE 4096*4096*2  //32MB
+#define BUFFER_SIZE 1024
 
 struct histogramBinStringInfo
 {
@@ -124,7 +125,7 @@ struct histogramBinStringInfo * findHistogramBinStringInfo(const char * str)
 void printLargeTextHistogramBinStringInfo(struct largeTextHistogramBinStringInfo * lTHBSI)
 {
     printf("Number of bins: %d \n", lTHBSI->numberOfBins);
-    for(int bin = 0; bin<lTHBSI->numberOfBins-1; bin++)
+    for(int bin = 0; bin<lTHBSI->numberOfBins; bin++)
     {
         printf("Number of characters in %d bin is %d. \n", bin, lTHBSI->numberOfCharatersInBins[bin]);
     }
@@ -151,7 +152,7 @@ void * sectionedPartioningWorkerFunction(void * arg)
     struct threadReturnInfo * tRI = (struct threadReturnInfo *)malloc(sizeof(struct threadReturnInfo));
     tRI->threadID = tAI->threadID;
     tRI->numberOfCharatersInBins = calloc(sizeof(int), tAI->hBSI->numberOfBins-1);
-    printf("Hello, I am thread %d \n", tAI->threadID);
+    //printf("Hello, I am thread %d \n", tAI->threadID);
     //Return with 0 count instead of doing segmentation fault due to limitation of large text string
     if ((tAI->threadID)*(tAI->uCI->blockSize)>(tAI->lTSI->size))
     {
@@ -180,6 +181,45 @@ void * sectionedPartioningWorkerFunction(void * arg)
 
     return (void *) tRI;
 }
+
+void * interleavedPartioningWorkerFunction(void * arg) 
+{
+    const struct threadArgInfo * tAI = (struct threadArgInfo *)arg;
+    struct threadReturnInfo * tRI = (struct threadReturnInfo *)malloc(sizeof(struct threadReturnInfo));
+    tRI->threadID = tAI->threadID;
+    tRI->numberOfCharatersInBins = calloc(sizeof(int), tAI->hBSI->numberOfBins-1);
+    //printf("Hello, I am thread %d \n", tAI->threadID);
+    //Return with 0 count instead of doing segmentation fault due to limitation of large text string
+    if ((tAI->threadID)*(tAI->uCI->blockSize)>(tAI->lTSI->size))
+    {
+        return (void *) tRI;
+    }
+
+    for(int sb = 0; (sb*(tAI->uCI->blockSize*tAI->uCI->numberOfThreads)+tAI->uCI->blockSize*tAI->threadID)<(tAI->lTSI->size); sb++)
+    {
+        for(int i = (sb*(tAI->uCI->blockSize*tAI->uCI->numberOfThreads)+tAI->uCI->blockSize*tAI->threadID); i<(sb*(tAI->uCI->blockSize*tAI->uCI->numberOfThreads)+tAI->uCI->blockSize*(tAI->threadID+1)); i++)
+        {
+            if(tAI->lTSI->largeTextString[i] == '\0')
+            {
+                return (void *) tRI;
+            }
+
+            for(int b = 0; b < (tAI->hBSI->numberOfBins-1); b++)
+            {
+                for(int c = 0; c < (tAI->hBSI->numberOfCharatersInBins[b]); c++)
+                {
+                    if(tAI->lTSI->largeTextString[i] == tAI->hBSI->charactersInBins[b][c])
+                    {
+                        tRI->numberOfCharatersInBins[b]++; 
+                    }
+                }
+            }
+        }
+    }
+    return (void *) tRI;
+}
+
+
 
 int main(int argc, char *argv[]) {
     //Checking if number of input arguments are complete
@@ -236,7 +276,14 @@ int main(int argc, char *argv[]) {
     lTHBSI->numberOfBins = hBSI->numberOfBins;
     lTHBSI->numberOfCharatersInBins = calloc(sizeof(int), lTHBSI->numberOfBins);
     lTHBSI->numberOfCharatersInBins[lTHBSI->numberOfBins-1] = lTSI->size;
-    //
+    //Now profiling time
+    struct timeval current_time;
+    gettimeofday(&current_time, NULL);
+    //Variables for tracking start and end time
+    long start_time_us = current_time.tv_usec;
+    long end_time_us = 0;
+    long start_time_sec = current_time.tv_sec;
+    long end_time_sec   = 0;
 
     for(int i = 0; i < uCI->numberOfThreads; i++)
     {
@@ -247,19 +294,25 @@ int main(int argc, char *argv[]) {
     
     for(int i = 0; i < uCI->numberOfThreads; i++)
     {
-        pthread_create(&p[i], NULL, (void *)sectionedPartioningWorkerFunction, tAIarr[i]);
+        pthread_create(&p[i], NULL, (void *)interleavedPartioningWorkerFunction, tAIarr[i]);
     }
 
     for(int i = 0; i < uCI->numberOfThreads; i++)
     {
         pthread_join(p[i], (void **) &tRIarr[i]);
-        printf("Thread %d returned back to the main. \n", tRIarr[i]->threadID);
+        //printf("Thread %d returned back to the main. \n", tRIarr[i]->threadID);
         for(int b = 0; b < lTHBSI->numberOfBins-1; b++)
         {
             lTHBSI->numberOfCharatersInBins[b] += tRIarr[i]->numberOfCharatersInBins[b];
             lTHBSI->numberOfCharatersInBins[lTHBSI->numberOfBins-1] -= tRIarr[i]->numberOfCharatersInBins[b];
         }
     }
+    //Time taken to compute results
+    gettimeofday(&current_time, NULL);
+    end_time_us = current_time.tv_usec;
+    end_time_sec = current_time.tv_sec;
+
+    printf("Time taken is %f seconds. \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
     printf("Number of bins are %d. \n", hBSI->numberOfBins);
     //printHistogramBinStringInfo((struct histogramBinStringInfo *)hBSI);
     printLargeTextHistogramBinStringInfo(lTHBSI);

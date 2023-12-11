@@ -5,7 +5,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["largeFile.txt", "binFile.txt", "10", "100"],
+            "args": ["largeFile.txt", "binFile.txt", "8", "4096"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
