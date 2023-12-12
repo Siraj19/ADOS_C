@@ -6,8 +6,12 @@
 #include <sys/time.h>
 
 //Warning that the page size should be larger than your largetextfile
-#define PAGE_SIZE 4096*4096*2  //32MB
+#define PAGE_SIZE 1024*1024*32  //32MB MAX file size allowed
 #define BUFFER_SIZE 1024
+#define MAX_THREADS 1024
+#define MIN_THREADS 1
+#define MAX_BLOCKSIZE PAGE_SIZE
+#define MIN_BLOCKSIZE 1
 
 struct histogramBinStringInfo
 {
@@ -154,12 +158,12 @@ void * sectionedPartioningWorkerFunction(void * arg)
     tRI->numberOfCharatersInBins = calloc(sizeof(int), tAI->hBSI->numberOfBins-1);
     //printf("Hello, I am thread %d \n", tAI->threadID);
     //Return with 0 count instead of doing segmentation fault due to limitation of large text string
-    if ((tAI->threadID)*(tAI->uCI->blockSize)>(tAI->lTSI->size))
+    if ((tAI->threadID)*(tAI->lTSI->size/tAI->uCI->numberOfThreads+1)>(tAI->lTSI->size))
     {
         return (void *) tRI;
     }
 
-    for(int i = (tAI->threadID)*(tAI->uCI->blockSize); i<(tAI->threadID+1)*(tAI->uCI->blockSize); i++)
+    for(int i = (tAI->threadID)*(tAI->lTSI->size/tAI->uCI->numberOfThreads+1); i<(tAI->threadID+1)*(tAI->lTSI->size/tAI->uCI->numberOfThreads+1); i++)
     {
         if(tAI->lTSI->largeTextString[i] == '\0')
         {
@@ -242,6 +246,17 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Partioning flag %s is incorrect.\n", partionSelect);
         exit(EXIT_FAILURE);
     }
+    //Checking if number of threads are positive and a valid number
+    if((numberOfThreads < MIN_THREADS) || (numberOfThreads > MAX_THREADS))
+    {
+        fprintf(stderr, "Invalid number of threads %d \n", numberOfThreads);
+        exit(EXIT_FAILURE);
+    }
+    if((blockSize < MIN_BLOCKSIZE) || (blockSize > MAX_BLOCKSIZE))
+    {
+        fprintf(stderr, "Invalid block size %d \n", blockSize);
+        exit(EXIT_FAILURE);
+    }
     //Reading input files from the given path & file name
     FILE * largeTextFile = fopen(pathLargeTextFile, "r");
     FILE * histogramBinsFile = fopen(pathHistogramBinsFile, "r");
@@ -256,7 +271,9 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Could not open file %s for reading.\n", pathHistogramBinsFile);
         exit(EXIT_FAILURE);
     }
-
+    printf("Number of threads are: %d \n", numberOfThreads);
+    printf("Block sizes is: %d \n", numberOfThreads);
+    printf("Partioning scheme is: %s \n", (*partionSelect == 's')?"Sectioned":"Interleaved");
     //Now profiling time
     struct timeval current_time;
     gettimeofday(&current_time, NULL);
@@ -340,6 +357,25 @@ int main(int argc, char *argv[]) {
     //printf("Number of bins are %d. \n", hBSI->numberOfBins);
     //printHistogramBinStringInfo((struct histogramBinStringInfo *)hBSI);
     printLargeTextHistogramBinStringInfo(lTHBSI);
+
+    //Freeing heap allocations
+    free(lTHBSI->numberOfCharatersInBins);
+    free(lTHBSI);
+    for(int i = 0; i < uCI->numberOfThreads; i++)
+    {
+        free(tAIarr[i]);
+        free(tRIarr[i]->numberOfCharatersInBins);
+        free(tRIarr[i]);
+    }
+    free(tAIarr);
+    free(tRIarr);
+    free(uCI);
+    free(lTSI);
+    free(hBSI->numberOfCharatersInBins);
+    free(hBSI);
+    free(histogramBinString);
+    free(largeTextString);
+
     printf("Done! \n");
     return EXIT_SUCCESS;
 }
