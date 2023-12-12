@@ -1,0 +1,584 @@
+Benchmark has started.
+Number of threads are: 1 
+Partioning scheme is: Sectioned 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 27.910631 seconds 
+Time taken to compute is 1.863698 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 2 
+Partioning scheme is: Sectioned 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.328936 seconds 
+Time taken to compute is 1.275262 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 4 
+Partioning scheme is: Sectioned 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.546318 seconds 
+Time taken to compute is 0.449256 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 8 
+Partioning scheme is: Sectioned 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.570383 seconds 
+Time taken to compute is 0.423696 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 16 
+Partioning scheme is: Sectioned 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.574640 seconds 
+Time taken to compute is 0.506100 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 32 
+Partioning scheme is: Sectioned 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.898882 seconds 
+Time taken to compute is 0.876801 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 1 
+Partioning scheme is: Interleaved 
+Block sizes is: 1 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.832939 seconds 
+Time taken to compute is 2.523410 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 1 
+Partioning scheme is: Interleaved 
+Block sizes is: 32 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.671061 seconds 
+Time taken to compute is 2.464683 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 1 
+Partioning scheme is: Interleaved 
+Block sizes is: 256 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.970352 seconds 
+Time taken to compute is 2.223766 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 1 
+Partioning scheme is: Interleaved 
+Block sizes is: 1024 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.937178 seconds 
+Time taken to compute is 2.639293 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 1 
+Partioning scheme is: Interleaved 
+Block sizes is: 2048 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 30.481581 seconds 
+Time taken to compute is 2.868776 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 1 
+Partioning scheme is: Interleaved 
+Block sizes is: 4096 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.350899 seconds 
+Time taken to compute is 1.599457 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 2 
+Partioning scheme is: Interleaved 
+Block sizes is: 1 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.367504 seconds 
+Time taken to compute is 1.953217 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 2 
+Partioning scheme is: Interleaved 
+Block sizes is: 32 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.064896 seconds 
+Time taken to compute is 1.112799 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 2 
+Partioning scheme is: Interleaved 
+Block sizes is: 256 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.407278 seconds 
+Time taken to compute is 1.736639 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 2 
+Partioning scheme is: Interleaved 
+Block sizes is: 1024 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.011782 seconds 
+Time taken to compute is 1.067158 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 2 
+Partioning scheme is: Interleaved 
+Block sizes is: 2048 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.444120 seconds 
+Time taken to compute is 1.735057 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 2 
+Partioning scheme is: Interleaved 
+Block sizes is: 4096 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.141920 seconds 
+Time taken to compute is 1.133965 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 4 
+Partioning scheme is: Interleaved 
+Block sizes is: 1 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.532274 seconds 
+Time taken to compute is 0.979436 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 4 
+Partioning scheme is: Interleaved 
+Block sizes is: 32 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.437746 seconds 
+Time taken to compute is 0.427801 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 4 
+Partioning scheme is: Interleaved 
+Block sizes is: 256 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.031376 seconds 
+Time taken to compute is 0.876386 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 4 
+Partioning scheme is: Interleaved 
+Block sizes is: 1024 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 32.231907 seconds 
+Time taken to compute is 0.425707 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 4 
+Partioning scheme is: Interleaved 
+Block sizes is: 2048 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.140921 seconds 
+Time taken to compute is 0.870488 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 4 
+Partioning scheme is: Interleaved 
+Block sizes is: 4096 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.856400 seconds 
+Time taken to compute is 0.869787 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 8 
+Partioning scheme is: Interleaved 
+Block sizes is: 1 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.165489 seconds 
+Time taken to compute is 0.472301 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 8 
+Partioning scheme is: Interleaved 
+Block sizes is: 32 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.624331 seconds 
+Time taken to compute is 0.468284 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 8 
+Partioning scheme is: Interleaved 
+Block sizes is: 256 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.528351 seconds 
+Time taken to compute is 0.864529 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 8 
+Partioning scheme is: Interleaved 
+Block sizes is: 1024 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.256487 seconds 
+Time taken to compute is 0.640679 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 8 
+Partioning scheme is: Interleaved 
+Block sizes is: 2048 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.748064 seconds 
+Time taken to compute is 0.420871 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 8 
+Partioning scheme is: Interleaved 
+Block sizes is: 4096 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.953049 seconds 
+Time taken to compute is 0.863580 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 16 
+Partioning scheme is: Interleaved 
+Block sizes is: 1 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.456884 seconds 
+Time taken to compute is 0.996482 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 16 
+Partioning scheme is: Interleaved 
+Block sizes is: 32 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.627426 seconds 
+Time taken to compute is 0.900143 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 16 
+Partioning scheme is: Interleaved 
+Block sizes is: 256 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.776836 seconds 
+Time taken to compute is 0.868335 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 16 
+Partioning scheme is: Interleaved 
+Block sizes is: 1024 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.055132 seconds 
+Time taken to compute is 0.423503 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 16 
+Partioning scheme is: Interleaved 
+Block sizes is: 2048 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.232063 seconds 
+Time taken to compute is 0.868469 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 16 
+Partioning scheme is: Interleaved 
+Block sizes is: 4096 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.483522 seconds 
+Time taken to compute is 0.860252 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 32 
+Partioning scheme is: Interleaved 
+Block sizes is: 1 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.853714 seconds 
+Time taken to compute is 0.480506 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 32 
+Partioning scheme is: Interleaved 
+Block sizes is: 32 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.115562 seconds 
+Time taken to compute is 0.877265 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 32 
+Partioning scheme is: Interleaved 
+Block sizes is: 256 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 29.591696 seconds 
+Time taken to compute is 0.823173 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 32 
+Partioning scheme is: Interleaved 
+Block sizes is: 1024 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.932608 seconds 
+Time taken to compute is 0.423136 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 32 
+Partioning scheme is: Interleaved 
+Block sizes is: 2048 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 30.639069 seconds 
+Time taken to compute is 0.494680 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Number of threads are: 32 
+Partioning scheme is: Interleaved 
+Block sizes is: 4096 
+Your large text string size is 33554433 
+Your histogram bin string size is 25 
+
+Time taken to read is 28.728910 seconds 
+Time taken to compute is 0.425508 seconds 
+Number of bins: 4 
+Number of characters in 0 bin is 2163790 
+Number of characters in 1 bin is 1623394 
+Number of characters in 2 bin is 3246904 
+Number of characters in 3 bin is 26520345 
+
+Benchmark has completed.

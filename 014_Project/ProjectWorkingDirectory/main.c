@@ -131,7 +131,7 @@ void printLargeTextHistogramBinStringInfo(struct largeTextHistogramBinStringInfo
     printf("Number of bins: %d \n", lTHBSI->numberOfBins);
     for(int bin = 0; bin<lTHBSI->numberOfBins; bin++)
     {
-        printf("Number of characters in %d bin is %d. \n", bin, lTHBSI->numberOfCharatersInBins[bin]);
+        printf("Number of characters in %d bin is %d \n", bin, lTHBSI->numberOfCharatersInBins[bin]);
     }
 }
 
@@ -272,8 +272,8 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
     printf("Number of threads are: %d \n", numberOfThreads);
-    printf("Block sizes is: %d \n", numberOfThreads);
     printf("Partioning scheme is: %s \n", (*partionSelect == 's')?"Sectioned":"Interleaved");
+    if(*partionSelect == 'i') printf("Block sizes is: %d \n", blockSize);
     //Now profiling time
     struct timeval current_time;
     gettimeofday(&current_time, NULL);
@@ -305,7 +305,7 @@ int main(int argc, char *argv[]) {
     gettimeofday(&current_time, NULL);
     end_time_us = current_time.tv_usec;
     end_time_sec = current_time.tv_sec;
-    printf("Time taken to read is %f seconds. \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
+    printf("Time taken to read is %f seconds \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
     gettimeofday(&current_time, NULL);
     start_time_us = current_time.tv_usec;
     start_time_sec = current_time.tv_sec;
@@ -353,7 +353,7 @@ int main(int argc, char *argv[]) {
     end_time_us = current_time.tv_usec;
     end_time_sec = current_time.tv_sec;
 
-    printf("Time taken to compute is %f seconds. \n \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
+    printf("Time taken to compute is %f seconds \n", (float)((end_time_us-start_time_us)/1000000.0+(end_time_sec-start_time_sec)));
     //printf("Number of bins are %d. \n", hBSI->numberOfBins);
     //printHistogramBinStringInfo((struct histogramBinStringInfo *)hBSI);
     printLargeTextHistogramBinStringInfo(lTHBSI);
@@ -376,6 +376,6 @@ int main(int argc, char *argv[]) {
     free(histogramBinString);
     free(largeTextString);
 
-    printf("Done! \n");
+    printf("\n");
     return EXIT_SUCCESS;
 }

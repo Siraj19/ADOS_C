@@ -5,7 +5,7 @@ echo "Benchmark has started."
 # threads and blocksize arguments
 threads=("1" "2" "4" "8" "16" "32")
 blockSizes=("1" "32" "256" "1024" "2048" "4096")
-flags=("i" "s")
+flags=("s" "i")
 largeFileAddress="largeFile.txt"
 binFileAddress="binFile.txt"
 executableFileName="./main"
